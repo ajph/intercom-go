@@ -1,8 +1,43 @@
 intercom-go
 ===========
 
-Go bindings for the Intercom API
+Go bindings for the [Intercom API](https://api.intercom.io/docs)
 
+##Creating an Intercom object
+```go
+api := intercom.NewIntercom("appId", "apiKey")
+```
+
+##Submitting an event
+```go
+package main
+
+import (
+	"intercom"
+	"log"
+	"time"
+) //import
+
+func main() {
+	var (
+		err error
+		e   intercom.Event_t
+	) //var
+
+	api := intercom.NewIntercom("appId", "apiKey")
+
+	e.EventName = "event-name-here"
+	e.CreatedAt = time.Now().Unix()
+	e.UserId = 8
+	e.Metadata = map[string]string{
+		"Metadata": "Goes here",
+	} //map
+
+	if err = api.SubmitEvent(e); err != nil {
+		log.Fatalln(err)
+	} //if
+} //main
+```
 
 
 #License
