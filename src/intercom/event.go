@@ -39,7 +39,7 @@ func (this *Event_t) SubmitEvent(appId, apiKey string) (err error) {
 	} //if
 
 	// Check reponse code and report any errors
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != 202 {
 		return errors.New(resp.Status)
 	} //if
 
