@@ -8,10 +8,10 @@ import (
 ) //import
 
 const (
-	API_ENDPOINT string = "https://api.intercom.io/events"
+	EVENTS_API_ENDPOINT string = "https://api.intercom.io/events"
 ) //const
 
-func (this *Event_t) SubmitEvent(appId, apiKey string) (err error) {
+func (this *Intercom_t) SubmitEvent(event Event_t) (err error) {
 	var (
 		req    *http.Request
 		resp   *http.Response
@@ -20,17 +20,17 @@ func (this *Event_t) SubmitEvent(appId, apiKey string) (err error) {
 	) //var
 
 	// Encode event struct into JSON
-	if err = json.NewEncoder(buffer).Encode(this); err != nil {
+	if err = json.NewEncoder(buffer).Encode(event); err != nil {
 		return err
 	} //if
 
 	// Create new POST request
-	if req, err = http.NewRequest("POST", API_ENDPOINT, buffer); err != nil {
+	if req, err = http.NewRequest("POST", EVENTS_API_ENDPOINT, buffer); err != nil {
 		return err
 	} //if
 
 	// Set authentication and headers
-	req.SetBasicAuth(appId, apiKey)
+	req.SetBasicAuth(this.AppId, this.ApiKey)
 	req.Header.Set("Content-Type", "application/json")
 
 	// Perform POST request
