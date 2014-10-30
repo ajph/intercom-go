@@ -39,6 +39,7 @@ func (this *Intercom_t) SubmitEvent(event Event_t) (err error) {
 	} //if
 
 	// Check reponse code and report any errors
+	// Intercom sends back a 202 for valid requests
 	if resp.StatusCode != 202 {
 		return errors.New(resp.Status)
 	} //if
