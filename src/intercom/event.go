@@ -4,10 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"log"
 	"net/http"
-	//"net/url"
-	//"strings"
 ) //import
 
 const (
@@ -16,14 +13,13 @@ const (
 
 func (this *Event_t) SubmitEvent(appId, apiKey string) (err error) {
 	var (
-		//eventJSON []byte
-		//data      url.Values   = make(url.Values)
-		client *http.Client = &http.Client{}
 		req    *http.Request
 		resp   *http.Response
 		buffer = new(bytes.Buffer)
+		client = new(http.Client)
 	) //var
 
+	// Encode event struct into JSON
 	if err = json.NewEncoder(buffer).Encode(this); err != nil {
 		return err
 	} //if
@@ -33,15 +29,16 @@ func (this *Event_t) SubmitEvent(appId, apiKey string) (err error) {
 		return err
 	} //if
 
+	// Set authentication and headers
 	req.SetBasicAuth(appId, apiKey)
 	req.Header.Set("Content-Type", "application/json")
 
-	log.Println(req)
-
+	// Perform POST request
 	if resp, err = client.Do(req); err != nil {
 		return err
 	} //if
 
+	// Check reponse code and report any errors
 	if resp.StatusCode != 200 {
 		return errors.New(resp.Status)
 	} //if
