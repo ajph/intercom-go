@@ -1,6 +1,6 @@
 package intercom
 
-type Company_t struct {
+type ExistingCompany_t struct {
 	Type             string                 `json:"type"`
 	Id               uint                   `json:"id"`
 	Name             string                 `json:"name"`
@@ -14,7 +14,16 @@ type Company_t struct {
 	SessionCount     uint                   `json:"session_count"`
 	UserCount        uint                   `json:"user_count"`
 	CustomAttributes map[string]interface{} `json:"custom_attributes"`
-} //Company_t
+} //ExistingCompany_t
+
+type NewCompany_t struct {
+	Name             string                 `json:"name"`
+	Plan             string                 `json:"plan"`
+	CompanyId        uint                   `json:"company_id"`
+	RemoteCreatedAt  int64                  `json:"remote_created_at"`
+	MonthlySpend     uint                   `json:"monthly_spend"`
+	CustomAttributes map[string]interface{} `json:"custom_attributes"`
+} //NewCompany_t
 
 type Plan_t struct {
 	Type string `json:"type"`
