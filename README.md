@@ -29,7 +29,7 @@ func main() {
 	e.EventName = "event-name-here"
 	e.CreatedAt = time.Now().Unix()
 	e.UserId = 8
-	e.Metadata = map[string]string{
+	e.Metadata = map[string]interface{} {
 		"Metadata": "Goes here",
 	} //map
 
