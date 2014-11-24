@@ -1,7 +1,7 @@
 package intercom
 
 type User_t struct {
-	Type                   string                 `json:"type"`
+	IntercomType           string                 `json:"type"`
 	Id                     string                 `json:"id"`
 	CreatedAt              int64                  `json:"created_at"`
 	RemoteCreatedAt        int64                  `json:"remote_created_at,omitempty"`
@@ -12,7 +12,7 @@ type User_t struct {
 	CustomAttributes       map[string]interface{} `json:"custom_attributes,omitempty"`
 	LastRequestAt          int64                  `json:"last_request_at,omitempty"`
 	SessionCount           uint                   `json:"session_count,omitempty"`
-	Avatar                 Avator_t               `json:"avatar,omitempty"`
+	Avatar                 Avatar_t               `json:"avatar,omitempty"`
 	UnsubscribedFromEmails bool                   `json:"unsubscribed_from_emails,omitempty"`
 	LocationData           Location_t             `json:"location_data,omitempty"`
 	UserAgentData          string                 `json:"user_agent_data,omitempty"`
@@ -20,13 +20,13 @@ type User_t struct {
 	Companies              []string               `json"companies,omitempty"`
 } //User_t
 
-type Avator_t struct {
-	Type     string `json:"type"`
-	ImageUrl string `json:"image_url"`
-} //Avator_t
+type Avatar_t struct {
+	IntercomType string `json:"type"`
+	ImageUrl     string `json:"image_url"`
+} //Avatar_t
 
 type Location_t struct {
-	Type          string `json:"type"`
+	IntercomType  string `json:"type"`
 	CityName      string `json:"city_name,omitempty"`
 	ContinentCode string `json:"continent_code,omitempty"`
 	CountryCode   string `json:"country_code,omitempty"`
@@ -39,18 +39,18 @@ type Location_t struct {
 } //Location_t
 
 type SocialProfile_t struct {
-	Type     string `json:"type"`
-	Name     string `json:"name"`
-	Username string `json:"username"`
-	Url      string `json:"url"`
-	Id       string `json:"id"`
+	IntercomType string `json:"type"`
+	Name         string `json:"name"`
+	Username     string `json:"username"`
+	Url          string `json:"url"`
+	Id           string `json:"id"`
 } //SocialProfile_t
 
 type UserList_t struct {
-	Type       string   `json:"type"`
-	TotalCount uint     `json:"total_count"`
-	Pages      Pages_t  `json:"pages"`
-	Users      []User_t `json"users"`
+	IntercomType string   `json:"type"`
+	TotalCount   uint     `json:"total_count"`
+	Pages        Pages_t  `json:"pages"`
+	Users        []User_t `json"users"`
 } //UserList_t
 
 type Pages_t struct {
