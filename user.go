@@ -16,30 +16,29 @@ const (
 
 func NewAvatar() *Avatar_t {
 	return &Avatar_t{
-		"IntercomType": "avatar",
+		IntercomType: "avatar",
 	} //Avatar_t
 } //NewAavatar
 
 func NewLocation() *Location_t {
 	return &Location_t{
-		"IntercomType": "location_data",
+		IntercomType: "location_data",
 	} //Location_t
 } //NewLocation
 
 func NewUser() *User_t {
 	return &User_t{
-		"IntercomType": "user",
-		"UpdatedAt":    time.Now().Unix(),
+		RemoteCreatedAt: time.Now().Unix(),
 	} //User_t
 } //NewUser
 
 func NewUserList() *UserList_t {
 	return &UserList_t{
-		"IntercomType": "user.list",
+		IntercomType: "user.list",
 	} //UserList_t
 } //NewUserList
 
-func (this *Intercom_t) PostUser(event Event_t) (err error) {
+func (this *Intercom_t) PostUser(user *User_t) (err error) {
 	var (
 		req    *http.Request
 		resp   *http.Response
@@ -47,8 +46,8 @@ func (this *Intercom_t) PostUser(event Event_t) (err error) {
 		client = new(http.Client)
 	) //var
 
-	// Encode event struct into JSON
-	if err = json.NewEncoder(buffer).Encode(event); err != nil {
+	// Encode user struct into JSON
+	if err = json.NewEncoder(buffer).Encode(*user); err != nil {
 		return err
 	} //if
 
@@ -59,6 +58,7 @@ func (this *Intercom_t) PostUser(event Event_t) (err error) {
 
 	// Set authentication and headers
 	req.SetBasicAuth(this.AppId, this.ApiKey)
+	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Content-Type", "application/json")
 
 	// Perform POST request
@@ -67,8 +67,8 @@ func (this *Intercom_t) PostUser(event Event_t) (err error) {
 	} //if
 
 	// Check reponse code and report any errors
-	// Intercom sends back a 202 for valid requests
-	if resp.StatusCode != 202 {
+	// Intercom sends back a 200 for valid requests
+	if resp.StatusCode != 200 {
 		return errors.New(resp.Status)
 	} //if
 

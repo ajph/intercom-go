@@ -1,10 +1,10 @@
 package intercom
 
 type User_t struct {
-	IntercomType           string                 `json:"type"`
-	Id                     string                 `json:"id"`
-	CreatedAt              int64                  `json:"created_at"`
-	RemoteCreatedAt        int64                  `json:"remote_created_at,omitempty"`
+	IntercomType           string                 `json:"type,omitempty"`
+	Id                     string                 `json:"id,omitempty"`
+	CreatedAt              int64                  `json:"created_at,omitempty"`
+	RemoteCreatedAt        int64                  `json:"remote_created_at"`
 	UpdatedAt              int64                  `json:"updated_at,omitempty"`
 	UserId                 string                 `json:"user_id,omitempty"`
 	Email                  string                 `json:"email,omitempty"`
@@ -12,12 +12,12 @@ type User_t struct {
 	CustomAttributes       map[string]interface{} `json:"custom_attributes,omitempty"`
 	LastRequestAt          int64                  `json:"last_request_at,omitempty"`
 	SessionCount           uint                   `json:"session_count,omitempty"`
-	Avatar                 Avatar_t               `json:"avatar,omitempty"`
+	Avatar                 *Avatar_t              `json:"avatar,omitempty"`
 	UnsubscribedFromEmails bool                   `json:"unsubscribed_from_emails,omitempty"`
-	LocationData           Location_t             `json:"location_data,omitempty"`
+	LocationData           *Location_t            `json:"location_data,omitempty"`
 	UserAgentData          string                 `json:"user_agent_data,omitempty"`
 	LastSeenIP             string                 `json:"last_seen_ip,omitempty"`
-	Companies              []string               `json"companies,omitempty"`
+	Companies              []string               `json:"companies,omitempty"`
 } //User_t
 
 type Avatar_t struct {
