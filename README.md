@@ -33,7 +33,7 @@ func main() {
 		"Metadata": "Goes here",
 	} //map
 
-	if err = api.SubmitEvent(e); err != nil {
+	if err = api.PostEvent(e); err != nil {
 		log.Fatalln(err)
 	} //if
 } //main
