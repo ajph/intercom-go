@@ -28,7 +28,7 @@ func NewLocation() *Location_t {
 
 func NewUser() *User_t {
 	return &User_t{
-		RemoteCreatedAt: time.Now().Unix(),
+		CustomAttributes: make(map[string]interface{}),
 	} //User_t
 } //NewUser
 
@@ -55,6 +55,7 @@ func (this *Intercom_t) PostUser(user *User_t) (err error) {
 	if req, err = http.NewRequest("POST", USERS_POST_API_ENDPOINT, buffer); err != nil {
 		return err
 	} //if
+	defer req.Close()
 
 	// Set authentication and headers
 	req.SetBasicAuth(this.AppId, this.ApiKey)
@@ -65,6 +66,7 @@ func (this *Intercom_t) PostUser(user *User_t) (err error) {
 	if resp, err = client.Do(req); err != nil {
 		return err
 	} //if
+	defer resp.Close()
 
 	// Check reponse code and report any errors
 	// Intercom sends back a 200 for valid requests
