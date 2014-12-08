@@ -17,7 +17,7 @@ type User_t struct {
 	LocationData           *Location_t            `json:"location_data,omitempty"`
 	UserAgentData          string                 `json:"user_agent_data,omitempty"`
 	LastSeenIP             string                 `json:"last_seen_ip,omitempty"`
-	Companies              []string               `json:"companies,omitempty"`
+	Companies              *Companies_t           `json:"companies,omitempty"`
 } //User_t
 
 type Avatar_t struct {
@@ -25,17 +25,22 @@ type Avatar_t struct {
 	ImageUrl     string `json:"image_url"`
 } //Avatar_t
 
+type Companies_t struct {
+	IntercomType string              `json:"type"`
+	Companies    []map[string]string `json:"companies"`
+} //Avatar_t
+
 type Location_t struct {
-	IntercomType  string `json:"type"`
-	CityName      string `json:"city_name,omitempty"`
-	ContinentCode string `json:"continent_code,omitempty"`
-	CountryCode   string `json:"country_code,omitempty"`
-	CountryName   string `json:"country_name,omitempty"`
-	Latitude      uint   `json:"latitude,omitempty"`
-	Longitude     uint   `json:"longitude,omitempty"`
-	PostalCode    string `json:"postal_code,omitempty"`
-	RegionName    string `json:"region_name,omitempty"`
-	Timezone      string `json:"timezone,omitempty"`
+	IntercomType  string  `json:"type"`
+	CityName      string  `json:"city_name,omitempty"`
+	ContinentCode string  `json:"continent_code,omitempty"`
+	CountryCode   string  `json:"country_code,omitempty"`
+	CountryName   string  `json:"country_name,omitempty"`
+	Latitude      float64 `json:"latitude,omitempty"`
+	Longitude     float64 `json:"longitude,omitempty"`
+	PostalCode    string  `json:"postal_code,omitempty"`
+	RegionName    string  `json:"region_name,omitempty"`
+	Timezone      string  `json:"timezone,omitempty"`
 } //Location_t
 
 type SocialProfile_t struct {

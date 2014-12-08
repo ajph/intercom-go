@@ -8,6 +8,9 @@ Go bindings for the [Intercom API](https://api.intercom.io/docs)
 api := intercom.NewIntercom("appId", "apiKey")
 ```
 
+##Creating a user
+
+
 ##Submitting an event
 ```go
 package main

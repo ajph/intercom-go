@@ -5,11 +5,10 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"time"
 ) //import
 
 const (
-	USERS_GET_API_ENDPOINT    string = "https://api.intercom.io/users/"
+	USERS_GET_API_ENDPOINT    string = "https://api.intercom.io/users"
 	USERS_POST_API_ENDPOINT   string = "https://api.intercom.io/users"
 	USERS_DELETE_API_ENDPOINT string = "https://api.intercom.io/users?"
 ) //const
@@ -17,6 +16,13 @@ const (
 func NewAvatar() *Avatar_t {
 	return &Avatar_t{
 		IntercomType: "avatar",
+	} //Avatar_t
+} //NewAavatar
+
+func NewCompanies() *Companies_t {
+	return &Companies_t{
+		IntercomType: "company.list",
+		//Companies:    make([]map[string]string, 0),
 	} //Avatar_t
 } //NewAavatar
 
@@ -38,6 +44,54 @@ func NewUserList() *UserList_t {
 	} //UserList_t
 } //NewUserList
 
+func (this *Intercom_t) DeleteUser(user *User_t) (err error) {
+	return errors.New("Endpoint not implemented yet.")
+} //DeleteUser
+
+func (this *Intercom_t) GetUser(user *User_t) (err error) {
+	var (
+		url  string = USERS_GET_API_ENDPOINT
+		req  *http.Request
+		resp *http.Response
+		//buffer = new(bytes.Buffer)
+		client = new(http.Client)
+	) //var
+
+	if user.UserId != "" {
+		url += "?user_id=" + user.UserId
+	} else if user.Email != "" {
+		url += "?email=" + user.Email
+	} //else if
+
+	// Create new GET request
+	if req, err = http.NewRequest("GET", url, nil); err != nil {
+		return err
+	} //if
+
+	// Set authentication and headers
+	req.SetBasicAuth(this.AppId, this.ApiKey)
+	req.Header.Set("Accept", "application/json")
+
+	// Perform GET request
+	if resp, err = client.Do(req); err != nil {
+		return err
+	} //if
+	defer resp.Body.Close()
+
+	// Check reponse code and report any errors
+	// Intercom sends back a 200 for valid requests
+	if resp.StatusCode != 200 {
+		return errors.New(resp.Status)
+	} //if
+
+	// Decode JSON response into User_t struct
+	if err = json.NewDecoder(resp.Body).Decode(user); err != nil {
+		return err
+	} //if
+
+	return nil
+} //GetUser
+
 func (this *Intercom_t) PostUser(user *User_t) (err error) {
 	var (
 		req    *http.Request
@@ -55,7 +109,6 @@ func (this *Intercom_t) PostUser(user *User_t) (err error) {
 	if req, err = http.NewRequest("POST", USERS_POST_API_ENDPOINT, buffer); err != nil {
 		return err
 	} //if
-	defer req.Close()
 
 	// Set authentication and headers
 	req.SetBasicAuth(this.AppId, this.ApiKey)
@@ -66,7 +119,7 @@ func (this *Intercom_t) PostUser(user *User_t) (err error) {
 	if resp, err = client.Do(req); err != nil {
 		return err
 	} //if
-	defer resp.Close()
+	defer resp.Body.Close()
 
 	// Check reponse code and report any errors
 	// Intercom sends back a 200 for valid requests

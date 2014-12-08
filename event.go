@@ -28,7 +28,6 @@ func (this *Intercom_t) PostEvent(event Event_t) (err error) {
 	if req, err = http.NewRequest("POST", EVENTS_POST_API_ENDPOINT, buffer); err != nil {
 		return err
 	} //if
-	defer req.Close()
 
 	// Set authentication and headers
 	req.SetBasicAuth(this.AppId, this.ApiKey)
@@ -38,7 +37,7 @@ func (this *Intercom_t) PostEvent(event Event_t) (err error) {
 	if resp, err = client.Do(req); err != nil {
 		return err
 	} //if
-	defer resp.Close()
+	defer resp.Body.Close()
 
 	// Check reponse code and report any errors
 	// Intercom sends back a 202 for valid requests
