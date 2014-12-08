@@ -8,10 +8,10 @@ import (
 ) //import
 
 const (
-	EVENTS_API_ENDPOINT string = "https://api.intercom.io/events"
+	EVENTS_POST_API_ENDPOINT string = "https://api.intercom.io/events"
 ) //const
 
-func (this *Intercom_t) SubmitEvent(event Event_t) (err error) {
+func (this *Intercom_t) PostEvent(event Event_t) (err error) {
 	var (
 		req    *http.Request
 		resp   *http.Response
@@ -25,7 +25,7 @@ func (this *Intercom_t) SubmitEvent(event Event_t) (err error) {
 	} //if
 
 	// Create new POST request
-	if req, err = http.NewRequest("POST", EVENTS_API_ENDPOINT, buffer); err != nil {
+	if req, err = http.NewRequest("POST", EVENTS_POST_API_ENDPOINT, buffer); err != nil {
 		return err
 	} //if
 
@@ -37,6 +37,7 @@ func (this *Intercom_t) SubmitEvent(event Event_t) (err error) {
 	if resp, err = client.Do(req); err != nil {
 		return err
 	} //if
+	defer resp.Body.Close()
 
 	// Check reponse code and report any errors
 	// Intercom sends back a 202 for valid requests
@@ -45,4 +46,4 @@ func (this *Intercom_t) SubmitEvent(event Event_t) (err error) {
 	} //if
 
 	return err
-} //SubmitEvent
+} //PostEvent
