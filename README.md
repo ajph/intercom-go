@@ -8,8 +8,32 @@ Go bindings for the [Intercom API](https://api.intercom.io/docs)
 api := intercom.NewIntercom("appId", "apiKey")
 ```
 
-##Creating a user
+##Creating a User
+```go
+package main
 
+import (
+	"intercom"
+	"log"
+	"time"
+) //import
+
+func main() {
+	var (
+		err error
+		user = new(intercom.User_t)
+	) //var
+
+	api := intercom.NewIntercom("appId", "apiKey")
+
+	user.Email = "foo@example.com"
+	user.Name = "Roky Erickson"
+
+	if err = api.PostUser(user); err != nil {
+		log.Fatalln(err)
+	}//if
+} //main
+```
 
 ##Submitting an event
 ```go
