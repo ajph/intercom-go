@@ -19,7 +19,7 @@ func (this *Intercom_t) PostEvent(event Event_t) (err error) {
 		client = new(http.Client)
 	) //var
 
-	// Encode event struct into JSON
+	// Encode struct into JSON
 	if err = json.NewEncoder(buffer).Encode(event); err != nil {
 		return err
 	} //if

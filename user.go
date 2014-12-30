@@ -6,6 +6,7 @@ import (
 	"errors"
 	"net/http"
 	"net/url"
+	"strings"
 ) //import
 
 const (
@@ -14,27 +15,39 @@ const (
 	USERS_DELETE_API_ENDPOINT string = "https://api.intercom.io/users"
 ) //const
 
-func NewAvatar() *Avatar_t {
-	return &Avatar_t{
+func NewUserAvatar() *UserAvatar_t {
+	return &UserAvatar_t{
 		IntercomType: "avatar",
-	} //Avatar_t
-} //NewAavatar
+	} //UserAvatar_t
+} //NewUserAavatar
 
+/*
 func NewCompanies() *Companies_t {
 	return &Companies_t{
 		IntercomType: "company.list",
 	} //Avatar_t
 } //NewAavatar
+*/
 
-func NewLocation() *Location_t {
-	return &Location_t{
+func NewUserLocation() *UserLocation_t {
+	return &UserLocation_t{
 		IntercomType: "location_data",
-	} //Location_t
-} //NewLocation
+	} //UserLocation_t
+} //NewUserLocation
 
-func NewUser() *User_t {
+func NewUser(httpMethod string) *User_t {
+	httpMethod = strings.TrimSpace(strings.ToUpper(httpMethod))
+
+	if httpMethod == "POST" {
+		return &User_t{
+			CustomAttributes: make(map[string]interface{}),
+			Companies:        make([]UserCompanyPost_t, 0),
+		} //User_t
+	} //if
+
 	return &User_t{
 		CustomAttributes: make(map[string]interface{}),
+		Companies:        UserCompanyGet_t{},
 	} //User_t
 } //NewUser
 
