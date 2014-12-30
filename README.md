@@ -20,7 +20,7 @@ import (
 func main() {
 	var (
 		err error
-		user = new(intercom.User_t)
+		user = intercom.NewUser("POST")
 	) //var
 
 	api := intercom.NewIntercom("appId", "apiKey")
