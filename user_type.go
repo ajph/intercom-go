@@ -17,7 +17,7 @@ type User_t struct {
 	LocationData           *Location_t            `json:"location_data,omitempty"`
 	UserAgentData          string                 `json:"user_agent_data,omitempty"`
 	LastSeenIP             string                 `json:"last_seen_ip,omitempty"`
-	Companies              *Companies_t           `json:"companies,omitempty"`
+	Companies              interface{}            `json:"companies,omitempty"`
 } //User_t
 
 type Avatar_t struct {
@@ -25,10 +25,15 @@ type Avatar_t struct {
 	ImageUrl     string `json:"image_url"`
 } //Avatar_t
 
-type Companies_t struct {
+type UserCompanyGet_t struct {
 	IntercomType string              `json:"type"`
 	Companies    []map[string]string `json:"companies"`
 } //Avatar_t
+
+type UserCompanyPost_t struct {
+	Id     string `json:"id,omitempty"`
+	Remove bool   `json:"remove,omitempty"`
+} //UserCompanyPost_t
 
 type Location_t struct {
 	IntercomType  string  `json:"type"`

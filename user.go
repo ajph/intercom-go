@@ -6,6 +6,7 @@ import (
 	"errors"
 	"net/http"
 	"net/url"
+	"strings"
 ) //import
 
 const (
@@ -20,11 +21,13 @@ func NewAvatar() *Avatar_t {
 	} //Avatar_t
 } //NewAavatar
 
+/*
 func NewCompanies() *Companies_t {
 	return &Companies_t{
 		IntercomType: "company.list",
 	} //Avatar_t
 } //NewAavatar
+*/
 
 func NewLocation() *Location_t {
 	return &Location_t{
@@ -32,9 +35,19 @@ func NewLocation() *Location_t {
 	} //Location_t
 } //NewLocation
 
-func NewUser() *User_t {
+func NewUser(httpMethod string) *User_t {
+	httpMethod = strings.TrimSpace(strings.ToUpper(httpMethod))
+
+	if httpMethod == "POST" {
+		return &User_t{
+			CustomAttributes: make(map[string]interface{}),
+			Companies:        make([]UserCompanyPost_t, 0),
+		} //User_t
+	} //if
+
 	return &User_t{
 		CustomAttributes: make(map[string]interface{}),
+		Companies:        UserCompanyGet_t{},
 	} //User_t
 } //NewUser
 

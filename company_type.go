@@ -2,10 +2,10 @@ package intercom
 
 type Company_t struct {
 	IntercomType     string                 `json:"type,omitempty"`
-	Id               uint                   `json:"id,omitempty"`
+	Id               string                 `json:"id,omitempty"`
 	Name             string                 `json:"name,omitempty"`
-	Plan             Plan_t                 `json:"plan,omitempty"`
-	CompanyId        uint                   `json:"company_id,omitempty"`
+	Plan             *Plan_t                `json:"plan,omitempty"`
+	CompanyId        string                 `json:"company_id,omitempty"`
 	RemoteCreatedAt  int64                  `json:"remote_created_at,omitempty"`
 	CreatedAt        int64                  `json:"created_at,omitempty"`
 	UpdatedAt        int64                  `json:"updated_at,omitempty"`
