@@ -11,7 +11,13 @@ const (
 	COMPANIES_API_ENDPOINT string = "https://api.intercom.io/companies"
 ) //const
 
-func (this *Intercom_t) SubmitCompany(com NewCompany_t) (err error) {
+func NewCompany() *Company_t {
+	return &Company_t{
+		CustomAttributes: make(map[string]interface{}),
+	} //User_t
+} //NewCompany
+
+func (this *Intercom_t) PostCompany(com *Company_t) (err error) {
 	var (
 		req    *http.Request
 		resp   *http.Response
@@ -19,8 +25,8 @@ func (this *Intercom_t) SubmitCompany(com NewCompany_t) (err error) {
 		client = new(http.Client)
 	) //var
 
-	// Encode struct into JSON
-	if err = json.NewEncoder(buffer).Encode(com); err != nil {
+	// Encode user struct into JSON
+	if err = json.NewEncoder(buffer).Encode(*com); err != nil {
 		return err
 	} //if
 
@@ -38,10 +44,11 @@ func (this *Intercom_t) SubmitCompany(com NewCompany_t) (err error) {
 	if resp, err = client.Do(req); err != nil {
 		return err
 	} //if
+	defer resp.Body.Close()
 
 	// Check reponse code and report any errors
-	// Intercom sends back a 202 for valid requests
-	if resp.StatusCode != 202 {
+	// Intercom sends back a 200 for valid requests
+	if resp.StatusCode != 200 {
 		return errors.New(resp.Status)
 	} //if
 
