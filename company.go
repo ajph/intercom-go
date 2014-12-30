@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"net/url"
 ) //import
 
 const (
@@ -16,6 +17,49 @@ func NewCompany() *Company_t {
 		CustomAttributes: make(map[string]interface{}),
 	} //User_t
 } //NewCompany
+
+func (this *Intercom_t) GetCompany(com *Company_t) (err error) {
+	var (
+		intercomUrl string = USERS_GET_API_ENDPOINT
+		req         *http.Request
+		resp        *http.Response
+		client      = new(http.Client)
+	) //var
+
+	if com.CompanyId != "" {
+		intercomUrl += "?company_id=" + com.CompanyId
+	} else if com.Name != "" {
+		intercomUrl += "?name=" + url.QueryEscape(com.Name)
+	} //else if
+
+	// Create new GET request
+	if req, err = http.NewRequest("GET", intercomUrl, nil); err != nil {
+		return err
+	} //if
+
+	// Set authentication and headers
+	req.SetBasicAuth(this.AppId, this.ApiKey)
+	req.Header.Set("Accept", "application/json")
+
+	// Perform GET request
+	if resp, err = client.Do(req); err != nil {
+		return err
+	} //if
+	defer resp.Body.Close()
+
+	// Check reponse code and report any errors
+	// Intercom sends back a 200 for valid requests
+	if resp.StatusCode != 200 {
+		return errors.New(resp.Status)
+	} //if
+
+	// Decode JSON response into User_t struct
+	if err = json.NewDecoder(resp.Body).Decode(com); err != nil {
+		return err
+	} //if
+
+	return nil
+} //GetUser
 
 func (this *Intercom_t) PostCompany(com *Company_t) (err error) {
 	var (
@@ -53,4 +97,4 @@ func (this *Intercom_t) PostCompany(com *Company_t) (err error) {
 	} //if
 
 	return err
-} //SubmitCompany
+} //PostCompany

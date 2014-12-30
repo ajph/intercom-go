@@ -15,11 +15,11 @@ const (
 	USERS_DELETE_API_ENDPOINT string = "https://api.intercom.io/users"
 ) //const
 
-func NewAvatar() *Avatar_t {
-	return &Avatar_t{
+func NewUserAvatar() *UserAvatar_t {
+	return &UserAvatar_t{
 		IntercomType: "avatar",
-	} //Avatar_t
-} //NewAavatar
+	} //UserAvatar_t
+} //NewUserAavatar
 
 /*
 func NewCompanies() *Companies_t {
@@ -29,11 +29,11 @@ func NewCompanies() *Companies_t {
 } //NewAavatar
 */
 
-func NewLocation() *Location_t {
-	return &Location_t{
+func NewUserLocation() *UserLocation_t {
+	return &UserLocation_t{
 		IntercomType: "location_data",
-	} //Location_t
-} //NewLocation
+	} //UserLocation_t
+} //NewUserLocation
 
 func NewUser(httpMethod string) *User_t {
 	httpMethod = strings.TrimSpace(strings.ToUpper(httpMethod))
