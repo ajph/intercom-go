@@ -4,7 +4,7 @@ type Company_t struct {
 	IntercomType     string                 `json:"type,omitempty"`
 	Id               string                 `json:"id,omitempty"`
 	Name             string                 `json:"name,omitempty"`
-	Plan             *Plan_t                `json:"plan,omitempty"`
+	Plan             interface{}            `json:"plan,omitempty"`
 	CompanyId        string                 `json:"company_id,omitempty"`
 	RemoteCreatedAt  int64                  `json:"remote_created_at,omitempty"`
 	CreatedAt        int64                  `json:"created_at,omitempty"`
@@ -16,7 +16,7 @@ type Company_t struct {
 	CustomAttributes map[string]interface{} `json:"custom_attributes,omitempty"`
 } //Company_t
 
-type Plan_t struct {
+type CompanyPlan_t struct {
 	IntercomType string `json:"type"`
 	Id           uint   `json:"id"`
 	Name         string `json:"name"`
