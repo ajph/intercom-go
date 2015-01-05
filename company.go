@@ -6,16 +6,27 @@ import (
 	"errors"
 	"net/http"
 	"net/url"
+	"strings"
 ) //import
 
 const (
 	COMPANIES_API_ENDPOINT string = "https://api.intercom.io/companies"
 ) //const
 
-func NewCompany() *Company_t {
+func NewCompany(httpMethod string) *Company_t {
+	httpMethod = strings.TrimSpace(strings.ToUpper(httpMethod))
+
+	if httpMethod == "POST" {
+		return &Company_t{
+			CustomAttributes: make(map[string]interface{}),
+			Plan:             "",
+		} //NewCompany
+	} //if
+
 	return &Company_t{
 		CustomAttributes: make(map[string]interface{}),
-	} //User_t
+		Plan:             CompanyPlan_t{},
+	} //NewCompany
 } //NewCompany
 
 func (this *Intercom_t) GetCompany(com *Company_t) (err error) {
