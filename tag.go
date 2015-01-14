@@ -5,29 +5,24 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strconv"
 ) //import
 
 const (
-	TAG_POST_API_ENDPOINT string = "https://api.intercom.io/tags"
+	TAG_DELETE_API_ENDPOINT string = "https://api.intercom.io/tags/"
+	TAG_GET_API_ENDPOINT    string = "https://api.intercom.io/tags"
+	TAG_POST_API_ENDPOINT   string = "https://api.intercom.io/tags"
 ) //const
 
-/*
-func (this *Intercom_t) DeleteUser(user *User_t) (err error) {
+func (this *Intercom_t) DeleteTag(id uint) (err error) {
 	var (
-		intercomUrl string = USERS_DELETE_API_ENDPOINT
-		req         *http.Request
-		resp        *http.Response
-		client      = new(http.Client)
+		req    *http.Request
+		resp   *http.Response
+		client = new(http.Client)
 	) //var
 
-	if user.UserId != "" {
-		intercomUrl += "?user_id=" + user.UserId
-	} else if user.Email != "" {
-		intercomUrl += "?email=" + url.QueryEscape(user.Email)
-	} //else if
-
-	// Create new GET request
-	if req, err = http.NewRequest("DELETE", intercomUrl, nil); err != nil {
+	// Create new DELETE request.  Add Tag ID to end of URL
+	if req, err = http.NewRequest("DELETE", USERS_DELETE_API_ENDPOINT+strconv.Itoa(int(id)), nil); err != nil {
 		return err
 	} //if
 
@@ -47,31 +42,18 @@ func (this *Intercom_t) DeleteUser(user *User_t) (err error) {
 		return errors.New(resp.Status)
 	} //if
 
-	// Decode JSON response into User_t struct
-	// Full User objecs are returned on DELETE
-	if err = json.NewDecoder(resp.Body).Decode(user); err != nil {
-		return err
-	} //if
-
 	return nil
-} //DeleteUser
+} //DeleteTag
 
-func (this *Intercom_t) GetUser(user *User_t) (err error) {
+func (this *Intercom_t) GetTagList(tags TagList_t) (err error) {
 	var (
-		intercomUrl string = USERS_GET_API_ENDPOINT
-		req         *http.Request
-		resp        *http.Response
-		client      = new(http.Client)
+		req    *http.Request
+		resp   *http.Response
+		client = new(http.Client)
 	) //var
 
-	if user.UserId != "" {
-		intercomUrl += "?user_id=" + user.UserId
-	} else if user.Email != "" {
-		intercomUrl += "?email=" + url.QueryEscape(user.Email)
-	} //else if
-
 	// Create new GET request
-	if req, err = http.NewRequest("GET", intercomUrl, nil); err != nil {
+	if req, err = http.NewRequest("GET", TAG_GET_API_ENDPOINT, nil); err != nil {
 		return err
 	} //if
 
@@ -92,13 +74,12 @@ func (this *Intercom_t) GetUser(user *User_t) (err error) {
 	} //if
 
 	// Decode JSON response into User_t struct
-	if err = json.NewDecoder(resp.Body).Decode(user); err != nil {
+	if err = json.NewDecoder(resp.Body).Decode(&tags); err != nil {
 		return err
 	} //if
 
 	return nil
-} //GetUser
-*/
+} //GetTagList
 
 func (this *Intercom_t) PostTag(tag Tag_t) (err error) {
 	var (

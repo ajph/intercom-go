@@ -1,5 +1,11 @@
 package intercom
 
+type TagList_t struct {
+	IntercomType string      `json:"type,omitempty"`
+	Tags         []Tag_t     `json:"tags,omitempty"`
+	Pages        interface{} `json:"pages,omitempty"`
+} //TagList_t
+
 type Tag_t struct {
 	IntercomType string         `json:"type,omitempty"`
 	Id           string         `json:"id,omitempty"`
