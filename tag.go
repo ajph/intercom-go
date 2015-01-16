@@ -111,8 +111,8 @@ func (this *Intercom_t) PostTag(tag Tag_t) (err error) {
 	defer resp.Body.Close()
 
 	// Check reponse code and report any errors
-	// Intercom sends back a 202 for valid requests
-	if resp.StatusCode != 202 {
+	// Intercom sends back a 200 for valid requests
+	if resp.StatusCode != 200 {
 		return errors.New(resp.Status)
 	} //if
 
