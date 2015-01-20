@@ -22,7 +22,7 @@ func (this *Intercom_t) DeleteTag(id uint) (err error) {
 	) //var
 
 	// Create new DELETE request.  Add Tag ID to end of URL
-	if req, err = http.NewRequest("DELETE", USERS_DELETE_API_ENDPOINT+strconv.Itoa(int(id)), nil); err != nil {
+	if req, err = http.NewRequest("DELETE", TAG_DELETE_API_ENDPOINT+strconv.Itoa(int(id)), nil); err != nil {
 		return err
 	} //if
 
