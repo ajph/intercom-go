@@ -45,7 +45,7 @@ func (this *Intercom_t) DeleteTag(id uint) (err error) {
 	return nil
 } //DeleteTag
 
-func (this *Intercom_t) GetTagList(tags TagList_t) (err error) {
+func (this *Intercom_t) GetTagList(tags *TagList_t) (err error) {
 	var (
 		req    *http.Request
 		resp   *http.Response
@@ -74,7 +74,7 @@ func (this *Intercom_t) GetTagList(tags TagList_t) (err error) {
 	} //if
 
 	// Decode JSON response into User_t struct
-	if err = json.NewDecoder(resp.Body).Decode(&tags); err != nil {
+	if err = json.NewDecoder(resp.Body).Decode(tags); err != nil {
 		return err
 	} //if
 
