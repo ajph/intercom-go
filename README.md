@@ -94,6 +94,35 @@ func main() {
 } //main
 ```
 
+##Tagging users
+```go
+package main
+
+import (
+	"intercom"
+	"log"
+) //import
+
+func main() {
+	var (
+		err error
+		tag intercom.Tag_t
+	) //var
+
+	api := intercom.NewIntercom("app_id", "api_key")
+
+	tag.Name = "new-user"
+	tag.Users = append(tag.Users,
+		intercom.TagUser_t{
+			Email: "rerickson@gmail.com",
+			Untag: false,
+		})
+
+	if err = api.PostTag(tag); err != nil {
+		log.Fatalln(err)
+	} //if
+} //main
+```
 
 #License
 The MIT License (MIT)
