@@ -8,7 +8,34 @@ Go bindings for the [Intercom API](https://api.intercom.io/docs)
 api := intercom.NewIntercom("appId", "apiKey")
 ```
 
-##Creating a User
+##Creating/Updating a User
+```go
+package main
+
+import (
+	"intercom"
+	"log"
+) //import
+
+func main() {
+	var (
+		err  error
+		user *intercom.User_t = intercom.NewUser("POST")
+	) //var
+
+	api := intercom.NewIntercom("app_id", "api_key")
+
+	user.Email = "foo@example.com"
+	user.Name = "Roky Erickson"
+	user.CustomAttributes["type"] = "user"
+
+	if err = api.PostUser(user); err != nil {
+		log.Fatalln(err)
+	}//if
+} //main
+```
+
+##Creating/Updating a Company
 ```go
 package main
 
@@ -20,15 +47,17 @@ import (
 func main() {
 	var (
 		err error
-		user = intercom.NewUser("POST")
+		com *intercom.Company_t = intercom.NewCompany("POST")
 	) //var
 
-	api := intercom.NewIntercom("appId", "apiKey")
+	api := intercom.NewIntercom("app_id", "api_key")
 
-	user.Email = "foo@example.com"
-	user.Name = "Roky Erickson"
+	com.CompanyId = "1612"
+	com.Name = "Enron"
+	com.Plan = "Premium"
+	com.CustomAttributes["Downloads remaining"] = 12
 
-	if err = api.PostUser(user); err != nil {
+	if err = api.PostCompany(com); err != nil {
 		log.Fatalln(err)
 	}//if
 } //main
@@ -50,7 +79,7 @@ func main() {
 		e   intercom.Event_t
 	) //var
 
-	api := intercom.NewIntercom("appId", "apiKey")
+	api := intercom.NewIntercom("app_id", "api_key")
 
 	e.EventName = "event-name-here"
 	e.CreatedAt = time.Now().Unix()
