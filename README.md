@@ -124,6 +124,35 @@ func main() {
 } //main
 ```
 
+##Initiating Conversations
+```go
+package main
+
+import (
+	"intercom"
+	"log"
+) //import
+
+func main() {
+	var (
+		err error
+		msg intercom.InitiateConversation_t
+	) //var
+
+	api := intercom.NewIntercom("app_id", "api_key")
+
+	msg.Body = "Hi there"
+	msg.From = intercom.MessageType_t{
+		MessageType: "user",
+		Email:       "email@example.com",
+	}
+
+	if err = api.PostMessage(msg); err != nil {
+		log.Fatalln(err)
+	} //if
+} //main
+```
+
 #License
 The MIT License (MIT)
 Copyright (c) 2014 CB Insights
